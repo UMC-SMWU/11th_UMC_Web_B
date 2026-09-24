@@ -24,7 +24,7 @@
 
 🖥️ git commit -m “커밋 메시지”
 
-🖥️ git push origin 본인이 만든 해당 주차 브랜치명
+🖥️ git push origin 본인이 만든 해당 주차 서브 브랜치명
 
 push를 완료했다면 스터디 repository에서 pull request를 진행합니다
 
