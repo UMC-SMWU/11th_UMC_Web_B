@@ -20,24 +20,21 @@
 
 ## 📌코드 push 순서
 
+매주 본인의 메인 브랜치로부터 서브 브랜치 FE와 BE를 각각 생성하시고 코드 작성 후
+
 🖥️ git add 자신이 수정한 파일명
 
 🖥️ git commit -m “커밋 메시지”
 
 🖥️ git push origin 본인이 만든 해당 주차 서브 브랜치명
 
-push를 완료했다면 스터디 repository에서 pull request를 진행합니다
+push를 완료했다면 스터디 repository에서 pull request를 진행합니다.
 
 (자신의 브랜치에 push 후 github 페이지 들어오면 뜰 거예요!)
 
-PR(Pull Request)시 메세지 제목은 다음과 같이 "[이름/닉네임] ㅇ주차 FE(BE) 정리 내용 제출" 이라고 적은 후 create pull request 버튼을 눌러주세요
-
-
-
+PR(Pull Request)시 메세지 제목은 다음과 같이 "[이름/닉네임] ㅇ주차 FE(BE) 정리 내용 제출" 이라고 적은 후 create pull request 버튼을 눌러주세요.
 
 ## ⭐ 매주 PR 생성하기
-
-매주 본인의 메인 브랜치로부터 서브 브랜치 FE와 BE를 각각 생성하시고
 
 PR : base: [본인의 메인 브랜치] <- compare: [본인의 서브 브랜치]
 
