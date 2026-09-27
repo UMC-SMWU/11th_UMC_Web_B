@@ -1,0 +1,41 @@
+.header-left {
+    display: flex;
+    align-items: center;
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 80px;
+}
+.header-logo {
+    display: flex;
+    align-items: center;
+}
+.header-logo-icon {
+    width: 32px;
+    height: 32px;
+}
+.header-logo-text {
+  font-family: "Pretendard";
+  font-weight: 900;
+  font-size: 20px;
+  line-height: 100%;
+  letter-spacing: -0.7px;
+  color: #17191e;
+}
+.header-nav {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+.header-nav a {
+  font-family: "Pretendard";
+  font-size: 14px;
+  line-height: 100%;
+  text-decoration: none;
+}
+.header-nav a.active {
+  font-weight: 700;
+  text-decoration: underline;
+}
