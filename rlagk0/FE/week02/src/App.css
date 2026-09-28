@@ -1,0 +1,221 @@
+body {
+	display: block;
+	min-width: 320px;
+	min-height: 100vh;
+	margin: 0;
+}
+
+#root {
+	width: 100%;
+	max-width: none;
+	min-height: 100vh;
+	margin: 0;
+	padding: 0;
+	text-align: left;
+}
+
+.app {
+	display: flex;
+	min-height: 100vh;
+	flex-direction: column;
+	background-color: #f6f7f9;
+  width: 100%;
+}
+
+.header {
+	flex: 0 0 auto;
+	background-color: #ffffff;
+	border-bottom: 1px solid #e1e4e9;
+}
+
+.header-inner {
+	display: flex;
+	width: min(100% - 48px, 1420px);
+	height: 100px;
+	margin: 0 auto;
+	align-items: center;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #17191f;
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.logo {
+	display: grid;
+	width: 38px;
+	height: 38px;
+	place-items: center;
+	border: 3px solid #17191f;
+	border-radius: 11px;
+}
+
+.navigation {
+  font-size: 15px;
+	display: flex;
+	margin-left: 48px;
+	align-items: center;
+	gap: 30px;
+}
+
+.navigation a {
+	padding: 8px 0;
+	color: #535869;
+	text-decoration: none;
+  padding-bottom: 2px;
+  font-weight: 600;
+}
+
+.navigation a.active {
+	color: #17191f;
+	border-bottom: 2px solid #17191f;
+}
+
+.header-right {
+	display: flex;
+	margin-left: auto;
+	align-items: center;
+	gap: 12px;
+}
+
+.search-button {
+	display: grid;
+	width: 48px;
+	height: 48px;
+	padding: 0;
+	place-items: center;
+	background-color: #ffffff;
+	border: 1px solid #dfe3e9;
+	border-radius: 10px;
+}
+
+.search-button img {
+	width: 23px;
+	height: 23px;
+}
+
+.login-button {
+	height: 48px;
+	padding: 0 21px;
+	background-color: #536ce6;
+	border: 0;
+	border-radius: 9px;
+	color: #ffffff;
+	font-size: 15px;
+	font-weight: 700;
+}
+
+.movie-page {
+	width: min(100% - 48px, 1420px);
+	margin: 0 auto;
+	padding: 31px 0 110px;
+	flex: 1;
+}
+
+.movie-page h1 {
+	margin: 0 0 28px;
+	color: #17191f;
+	font-size: 38px;
+	font-weight: 800;
+	letter-spacing: -1.8px;
+	line-height: 1.2;
+}
+
+.movie-grid {
+	display: grid;
+	grid-template-columns: repeat(5, minmax(0, 1fr));
+	gap: 27px 20px;
+  text-align: left;
+}
+
+.movie-card {
+	min-width: 0;
+}
+
+.poster-wrapper {
+	position: relative;
+	overflow: hidden;
+	width: 100%;
+	aspect-ratio: 270 / 306;
+	border-radius: 10px;
+	background-color: #e5e7eb;
+}
+
+.movie-poster {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.bookmark-button {
+	position: absolute;
+	top: 11px;
+	right: 11px;
+	display: grid;
+	width: 38px;
+	height: 38px;
+	padding: 0;
+	place-items: center;
+	background-color: rgb(18 21 27 / 88%);
+	border: 1px solid rgb(255 255 255 / 90%);
+	border-radius: 9px;
+}
+
+.bookmark-button.bookmarked {
+	background-color: #536ce6;
+	border-color: #536ce6;
+}
+
+.bookmark-button img {
+	width: 23px;
+	height: 23px;
+	filter: brightness(0) invert(1);
+}
+
+.movie-title {
+	margin: 9px 0 3px;
+	overflow: hidden;
+	color: #17191f;
+	font-size: 15px;
+	font-weight: 750;
+	letter-spacing: -0.45px;
+	line-height: 1.35;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.release-date {
+	margin: 0;
+	color: #9ca2ad;
+	font-size: 12px;
+	font-weight: 400;
+	line-height: 1.4;
+}
+
+.pagination {
+	display: flex;
+	margin-top: 48px;
+	justify-content: center;
+	gap: 8px;
+}
+
+.page-button {
+	width: 40px;
+	height: 40px;
+	padding: 0;
+	background-color: #ffffff;
+	border: 1px solid #dfe3e9;
+	border-radius: 8px;
+	color: #535869;
+	font-weight: 600;
+}
+
+.page-button.active {
+	background-color: #536ce6;
+	border-color: #536ce6;
+	color: #ffffff;
+}
