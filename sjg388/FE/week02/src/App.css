@@ -1,0 +1,146 @@
+body {
+  margin: 0;
+  background: #f0efef;
+  color: #232323;
+  font-family: 'Arial', sans-serif;
+}
+.header {
+  height: 80px;
+  display: flex;
+  align-items: center;
+  padding: 0 76px;
+  gap: 40px;
+  background: white;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.logo {
+  border: 2px solid #000;
+  border-radius: 7px;
+  padding: 2px 2px;
+}
+
+.nav {
+  display: flex;
+  gap: 24px;
+}
+
+.nav a {
+  color: #232323;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.header-actions {
+  margin-left: auto;
+  display: flex;
+  gap: 12px;
+}
+
+.main-content {
+  padding: 28px 76px 70px;
+}
+
+.main-content > h1 {
+  font-size: 32px;
+  margin: 0 0 28px;
+  color: #232323;
+}
+
+.movie-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 28px 16px;
+  width: 100%;
+}
+
+.movie-card {
+  min-width: 0;
+}
+
+.poster {
+  width: 100%;
+  display: block;
+  border-radius: 8px;
+  aspect-ratio: 4 / 4.6;
+  object-fit: cover;
+}
+
+.movie-card h2 {
+  font-size: 14px;
+  margin: 10px 0 4px;
+  color: #232323;
+}
+
+.movie-card p {
+  font-size: 12px;
+  margin: 0;
+  color: #aaa;
+}
+
+.posters {
+  position: relative;
+}
+
+.bookmark-button {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  border: none;
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.65);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.bookmark-button img {
+  width: 20px;
+  height: 20px;
+  filter: brightness(0) invert(1);
+}
+
+.bookmark-button[aria-pressed="true"] {
+  background: #7452f9;
+}
+
+.search-button {
+  width: 42px;
+  height: 42px;
+  border: 1px solid #dfe3e8;
+  border-radius: 8px;
+  background: white;
+}
+
+.search-button img {
+  width: 20px;
+  height: 20px;
+}
+
+.login-button {
+  width: 42px;
+  min-width: 72px;
+  padding: 0 18px;
+  white-space: nowrap;
+  border: 0;
+  border-radius: 7px;
+  background: #7452f9;
+  color: white;
+  font-weight: 600;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 80px;
+}
