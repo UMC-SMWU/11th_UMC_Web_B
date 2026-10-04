@@ -32,16 +32,16 @@ export function SearchPage() {
   }
 
   return (
-    <main>
+    <main className="min-h-screen bg-[#f0efef] px-[76px] py-7 text-[#232323]">
       <h1>영화 검색</h1>
 
-      <form onSubmit={handleSubmit}>
-        <input
+      <form onSubmit={handleSubmit} className="mb-8 flex max-w-xl gap-2">
+        <input className="flex-1 rounded-lg border border-gray-300 bg-white px-4 py-2"
           aria-label="검색어"
           value={searchText}
           onChange={(event) => setSearchText(event.target.value)}
         />
-        <button type="submit">검색</button>
+        <button className="rounded-lg bg-[#7452f9] px-5 py-2 font-semibold text-white" type="submit">검색</button>
       </form>
 
       {!normalizedQuery ? (
@@ -54,7 +54,7 @@ export function SearchPage() {
           {searchResults.length === 0 ? (
             <p>검색 결과가 없어요.</p>
           ) : (
-            <ul>
+            <ul className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
               {searchResults.map((movie) => (
                 <li key={movie.id}>
                   <img src={movie.posterPath} alt={`${movie.title} 포스터`} />
