@@ -1,5 +1,5 @@
 import { Link, useNavigate, useSearch } from "@tanstack/react-router";
-import { useState, type SubmitEvent } from "react";
+import { useEffect, useState, type SubmitEvent } from "react";
 import { movies } from "../../data/movies";
 
 export function SearchPage() {
@@ -7,6 +7,10 @@ export function SearchPage() {
     const navigate = useNavigate({ from: "/search" });
 
     const [searchText, setSearchText] = useState(query ?? "");
+
+    useEffect(() => {
+        setSearchText(query ?? "");
+    }, [query]);
 
     const normalizedQuery =
         query?.trim().toLowerCase() ?? "";
