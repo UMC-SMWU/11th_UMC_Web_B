@@ -19,8 +19,8 @@ export function Header() {
                 </Link>
 
 				<nav className="ml-12 flex items-center gap-[30px] text-[15px]">
-				    <Link
-				        className="border-b-2 py-2 pb-0.5 font-semibold no-underline"
+                    <Link
+                        className="border-b-2 py-2 pb-0.5 font-semibold no-underline"
 				        activeProps={{
 				            className: "border-[#17191f] text-[#17191f]",
 				        }}
