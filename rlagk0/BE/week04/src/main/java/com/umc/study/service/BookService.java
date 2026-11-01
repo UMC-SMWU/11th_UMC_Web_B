@@ -4,6 +4,7 @@ import com.umc.study.dto.BookResponse;
 import com.umc.study.dto.CreateBookRequest;
 import com.umc.study.entity.Book;
 import com.umc.study.entity.Category;
+import com.umc.study.exception.ConflictException;
 import com.umc.study.exception.ResourceNotFoundException;
 import com.umc.study.repository.BookRepository;
 import com.umc.study.repository.CategoryRepository;
@@ -20,14 +21,22 @@ public class BookService {
     private final CategoryRepository categoryRepository;
 
     @Transactional(readOnly = true)
-    public List<BookResponse> getBooks() {
-        return bookRepository.findAllByOrderByBookIdDesc().stream()
+    public List<BookResponse> getBooks(String keyword) {
+        List<Book> books = (keyword == null || keyword.isBlank())
+                ? bookRepository.findAllByOrderByBookIdDesc()
+                : bookRepository.findByTitleContainingOrderByBookIdDesc(keyword.trim());
+
+        return books.stream()
                 .map(BookResponse::from)
                 .toList();
     }
 
     @Transactional
     public BookResponse createBook(CreateBookRequest request) {
+        if (bookRepository.existsByTitle(request.title())) {
+            throw new ConflictException("이미 등록된 도서입니다.");
+        }
+
         Category category = categoryRepository.
                 findById(request.categoryId())
                 .orElseThrow(() -> new ResourceNotFoundException("존재하지 않는 카테고리입니다."));

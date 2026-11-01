@@ -2,6 +2,7 @@ package com.umc.study.controller;
 
 import com.umc.study.dto.RentalCreateRequest;
 import com.umc.study.service.RentalService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +17,7 @@ public class RentalController {
 
     @PostMapping
     public ResponseEntity<String> createRental(
-            @RequestBody RentalCreateRequest request
+            @Valid @RequestBody RentalCreateRequest request
     ) {
         rentalService.createRental(request);
 
@@ -35,4 +36,4 @@ public class RentalController {
                 "도서 반납이 완료되었습니다!"
         );
     }
-}
+}
