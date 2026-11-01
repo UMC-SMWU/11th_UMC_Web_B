@@ -1,27 +1,15 @@
 import { Link, useParams } from "@tanstack/react-router";
 import { useState } from "react";
-import { movies } from "../../data/movies";
+import { BookmarkButton } from "../../components/movies/bookmark-button";
 import { cn } from "../../utils/cn";
-import { useBookmarkStore } from "../../stores/bookmark-store";
+import { movies } from "../../data/movies";
 
 export function MovieDetailPage() {
     const { movieId } = useParams({
         from: "/movies/$movieId",
     });
 
-    const movie = movies.find(
-        (item) => item.id === Number(movieId),
-    );
-
-    const isBookmarked = useBookmarkStore((state) =>
-        movie ? state.bookmarkedMovieIds.includes(movie.id) : false,
-    );
-
-    const toggleBookmark = useBookmarkStore(
-        (state) => state.toggleBookmark
-    );
-
-    const [rating, setRating] = useState(0);
+    const movie = movies.find((item) => item.id === Number(movieId));
 
     if (!movie) {
         return (
@@ -73,12 +61,8 @@ export function MovieDetailPage() {
                         <p className="mt-2 flex flex-wrap gap-2 text-sm font-semibold">
                             <span>{movie.releaseDate}</span>
                             <span>·</span>
-
-                            <span>
-                                {movie.genres.join(" · ")}
-                            </span>
+                            <span>{movie.genres.join(" · ")}</span>
                             <span>·</span>
-
                             <span>{movie.runtime}</span>
                         </p>
                     </div>
@@ -102,81 +86,68 @@ export function MovieDetailPage() {
                             {movie.overview}
                         </p>
 
-                        <button
-                            className={cn(
-                                "mt-5 inline-flex h-10 items-center gap-2 rounded-lg border-0 px-5 text-sm font-bold text-white",
-                                isBookmarked
-                                    ? "bg-[#17191f]"
-                                    : "bg-[#536ce6]",
-                            )}
-                            type="button"
-                            onClick={() => {
-                                toggleBookmark(movie.id);
-                            }}
-                        >
-                            <img
-                                className="h-4 w-4 brightness-0 invert"
-                                src={
-                                    isBookmarked
-                                        ? "/icons/movie-icons/bookmark.svg"
-                                        : "/icons/movie-icons/bookmark-outline.svg"
-                                }
-                                alt=""
-                            />
-
-                            {isBookmarked
-                                ? "즐겨찾기 해제"
-                                : "즐겨찾기"}
-                        </button>
+                        <BookmarkButton
+                            className="mt-5"
+                            movieId={movie.id}
+                            movieTitle={movie.title}
+                            variant="label"
+                        />
                     </div>
                 </div>
 
-                <aside className="border-l border-[#dfe3e9] pl-7">
-                    <h2 className="text-xl font-extrabold text-[#17191f]">
-                        내 평점
-                    </h2>
-
-                    <p className="mt-1 text-xs text-[#9ca2ad]">
-                        별점은 필수, 후기는 선택이에요.
-                    </p>
-
-                    <div
-                        className="mt-3 flex gap-2"
-                        aria-label="별점 선택"
-                    >
-                        {[1, 2, 3, 4, 5].map((score) => (
-                            <button
-                                className={cn(
-                                    "grid h-9 w-9 place-items-center rounded-lg border border-[#dfe3e9] bg-white text-xl",
-                                    score <= rating
-                                        ? "text-[#536ce6]"
-                                        : "text-[#727887]",
-                                )}
-                                key={score}
-                                type="button"
-                                aria-label={`${score}점`}
-                                onClick={() =>
-                                    setRating(score)
-                                }
-                            >
-                                ★
-                            </button>
-                        ))}
-                    </div>
-
-                    <textarea
-                        className="mt-3 h-24 w-full resize-none rounded-lg border border-[#dfe3e9] bg-white p-3 text-sm outline-none focus:border-[#536ce6]"
-                        placeholder="영화를 보고 느낀 점을 남겨보세요."
-                    />
-
-                    <button
-                        className="mt-2 h-10 w-full rounded-lg border-0 bg-[#17191f] text-sm font-bold text-white"
-                        type="button"
-                    >
-                        평점 저장
-                    </button>
-                </aside>
+                <RatingForm key={movie.id} />
             </section>
         </main>
+    );
+}
+
+/**
+ * 상세 → 상세로 바로 이동할 때 이전 영화의 별점이 남지 않도록
+ * 부모에서 key={movie.id}로 렌더링해요.
+ */
+function RatingForm() {
+    const [rating, setRating] = useState(0);
+
+    return (
+        <aside className="border-l border-[#dfe3e9] pl-7">
+            <h2 className="text-xl font-extrabold text-[#17191f]">내 평점</h2>
+
+            <p className="mt-1 text-xs text-[#9ca2ad]">
+                별점은 필수, 후기는 선택이에요.
+            </p>
+
+            <div className="mt-3 flex gap-2" role="group" aria-label="별점 선택">
+                {[1, 2, 3, 4, 5].map((score) => (
+                    <button
+                        className={cn(
+                            "grid h-9 w-9 place-items-center rounded-lg border border-[#dfe3e9] bg-white text-xl",
+                            score <= rating
+                                ? "text-[#536ce6]"
+                                : "text-[#727887]",
+                        )}
+                        key={score}
+                        type="button"
+                        aria-label={`${score}점`}
+                        aria-pressed={score === rating}
+                        onClick={() => setRating(score)}
+                    >
+                        ★
+                    </button>
+                ))}
+            </div>
+
+            <textarea
+                className="mt-3 h-24 w-full resize-none rounded-lg border border-[#dfe3e9] bg-white p-3 text-sm outline-none focus:border-[#536ce6]"
+                aria-label="후기"
+                placeholder="영화를 보고 느낀 점을 남겨보세요."
+            />
+
+            <button
+                className="mt-2 h-10 w-full rounded-lg border-0 bg-[#17191f] text-sm font-bold text-white"
+                type="button"
+            >
+                평점 저장
+            </button>
+        </aside>
     );
 }
