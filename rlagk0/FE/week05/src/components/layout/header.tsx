@@ -46,9 +46,18 @@ export function Header() {
 				        검색
 				    </Link>
 					
-				    <span className="border-b-2 border-transparent py-2 pb-0.5 font-semibold text-[#535869]">
+				    <Link
+				        className="border-b-2 py-2 pb-0.5 font-semibold no-underline"
+				        activeProps={{
+				            className: "border-[#17191f] text-[#17191f]",
+				        }}
+				        inactiveProps={{
+				            className: "border-transparent text-[#535869]",
+				        }}
+				        to="/me"
+				    >
 				        내 정보
-				    </span>
+				    </Link>
 				</nav>
 
                 <div className="ml-auto flex items-center gap-3">
@@ -74,4 +83,4 @@ export function Header() {
             </div>
         </header>
     );
-}
+}
