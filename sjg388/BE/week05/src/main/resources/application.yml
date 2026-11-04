@@ -1,7 +1,9 @@
 spring:
+  application:
+    name: movie
   datasource:
-    url: jdbc:mysql://localhost:3306/umc_movie
-    username: root
+    url: ${DB_URL:jdbc:mysql://localhost:3306/umc_movie}
+    username: ${DB_USER:root}
     password: ${DB_PASSWORD}
   jpa:
     hibernate:
