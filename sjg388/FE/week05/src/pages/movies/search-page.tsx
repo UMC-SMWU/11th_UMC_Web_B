@@ -42,7 +42,7 @@ function SearchContent({ query }: { query: string }) {
   }
 
   return (
-    <main className="min-h-screen bg-[#f0efef] px-[76px] py-8 text-[#232323]">
+    <main className="flex-1 bg-[#f0efef] px-[76px] py-8 text-[#232323]">
       <h1 className="mb-6 text-[34px] font-extrabold">
         영화 검색
       </h1>
@@ -73,7 +73,7 @@ function SearchContent({ query }: { query: string }) {
         <>
           <div className="mb-6 flex items-end justify-between border-b border-gray-300 pb-4">
             <h2 className="text-xl font-bold">
-              ‘{query}’ 검색 결과
+              ‘{normalizedQuery}’ 검색 결과
             </h2>
             <p className="text-sm text-gray-500">
               {state.status === 'success' ? '영화 ' + state.data.total_results + '편' : ''}

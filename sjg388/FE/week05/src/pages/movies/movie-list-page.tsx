@@ -14,7 +14,7 @@ function MovieListResults({ page, onPage }: { page: number; onPage: (page: numbe
 }
 export function MovieListPage() {
   const [page, setPage] = useState(1);
-  return <main className="min-h-[70vh] bg-[#f0efef] px-[76px] pb-[70px] pt-7 text-[#232323]">
+  return <main className="flex-1 bg-[#f0efef] px-[76px] pb-[70px] pt-7 text-[#232323]">
     <h1 className="mb-7 text-[32px] font-bold">영화 목록</h1>
     <MovieListResults key={page} page={page} onPage={setPage} />
   </main>;

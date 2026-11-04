@@ -11,7 +11,7 @@ export function MovieDetailPage() {
   const { movieId } = useParams({ from: "/movies/$movieId" });
 
   const parsedMovieId = Number(movieId);
-  if (!Number.isSafeInteger(parsedMovieId) || parsedMovieId <= 0) return <main className="min-h-[70vh] p-20"><p role="alert">올바르지 않은 영화 번호예요.</p></main>;
+  if (!Number.isSafeInteger(parsedMovieId) || parsedMovieId <= 0) return <main className="flex-1 p-20"><p role="alert">올바르지 않은 영화 번호예요.</p></main>;
   return <MovieDetailContent key={parsedMovieId} movieId={parsedMovieId} />;
 }
 
@@ -26,13 +26,20 @@ function MovieDetailContent({ movieId }: { movieId: number }) {
     (state) => state.toggleBookmark,
   );
 
-  if (state.status === 'loading') return <main className="min-h-[70vh] p-20"><p role="status">영화 정보를 불러오는 중이에요.</p></main>;
-  if (state.status === 'error') return <main className="min-h-[70vh] p-20"><p role="alert">{state.message}</p></main>;
+  if (state.status === 'loading') return <main className="flex-1 p-20"><p role="status">영화 정보를 불러오는 중이에요.</p></main>;
+  if (state.status === 'error') return <main className="flex-1 p-20"><p role="alert">{state.message}</p></main>;
   const movie = state.data;
   const isBookmarked = bookmarkedMovieIds.includes(movie.id);
+  const movieMeta = [
+    movie.release_date,
+    movie.genres.map((genre) => genre.name).join(" · "),
+    typeof movie.runtime === "number"
+      ? `${Math.floor(movie.runtime / 60)}시간 ${movie.runtime % 60}분`
+      : "상영 시간 정보가 없어요.",
+  ].filter(Boolean).join(" · ");
 
   return (
-    <main className="min-h-screen bg-[#f0efef] text-[#232323]">
+    <main className="flex-1 bg-[#f0efef] text-[#232323]">
       <section className="relative h-[360px] overflow-hidden">
         <MovieImage
           src={getTmdbBackdropUrl(movie.backdrop_path)}
@@ -60,16 +67,12 @@ function MovieDetailContent({ movieId }: { movieId: number }) {
           </p>
 
           <p className="mt-3 text-sm text-white/90">
-            {movie.release_date}
-            {" · "}
-            {movie.genres.map((genre) => genre.name).join(" · ")}
-            {" · "}
-            {typeof movie.runtime === "number" ? Math.floor(movie.runtime / 60) + "시간 " + (movie.runtime % 60) + "분" : "상영 시간 정보가 없어요."}
+            {movieMeta}
           </p>
         </div>
       </section>
 
-      <section className="grid grid-cols-[220px_1fr_320px] gap-8 px-[76px] py-8">
+      <section className="grid grid-cols-1 gap-8 px-4 py-8 md:grid-cols-[220px_minmax(0,1fr)] md:px-8 lg:grid-cols-[220px_minmax(0,1fr)_320px] lg:px-[76px]">
         <MovieImage
           src={getTmdbPosterUrl(movie.poster_path)}
           alt={`${movie.title} 포스터`}
@@ -77,12 +80,14 @@ function MovieDetailContent({ movieId }: { movieId: number }) {
         />
 
         <div>
-          <h2 className="mb-3 text-[24px] font-bold">
-            {movie.tagline}
-          </h2>
+          {movie.tagline && (
+            <h2 className="mb-3 text-[24px] font-bold">
+              {movie.tagline}
+            </h2>
+          )}
 
           <p className="mb-6 leading-7 text-gray-700">
-            {movie.overview}
+            {movie.overview || "줄거리 정보가 없어요."}
           </p>
 
           <button
@@ -96,7 +101,7 @@ function MovieDetailContent({ movieId }: { movieId: number }) {
           </button>
         </div>
 
-        <aside className="border-l border-gray-300 pl-8">
+        <aside className="border-t border-gray-300 pt-6 md:col-span-2 lg:col-span-1 lg:border-l lg:border-t-0 lg:pl-8 lg:pt-0">
           <h2 className="mb-2 text-xl font-bold">내 평점</h2>
 
           <div className="mb-5 flex gap-2">
