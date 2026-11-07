@@ -1,63 +1,46 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import MovieGrid from "../../components/movies/movie-grid";
 import { Pagination } from "../../components/movies/pagination";
-import { type TmdbMovieListItem } from "../../api/movies/models";
 import { getMovies } from "../../api/movies/get-movies";
 
-const PAGE_SIZE = 10;
 export function MovieListPage() {
-  const [movies, setMovies] = useState<TmdbMovieListItem[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [page, setPage] = useState(1);
 
-  useEffect(() => {
-    let ignore = false;
-    async function loadMovies() {
-      setIsLoading(true);
-      setErrorMessage(null);
+  const moviesQuery = useQuery({
+    queryKey: ["movies", "list", { page }],
+    queryFn: () => getMovies({ page }),
+  });
 
-      try {
-        const response = await getMovies({ page: 1 });
-        if (!ignore) setMovies(response.results);
-      } catch {
-        if (!ignore) setErrorMessage("영화 목록을 불러오지 못했어요.");
-      } finally {
-        if (!ignore) setIsLoading(false);
-      }
-    }
+  const movies = moviesQuery.data?.results ?? [];
+  const totalPages = moviesQuery.data?.total_pages ?? 0;
 
-    loadMovies();
-    return () => {
-      ignore = true;
-    };
-  }, []);
-
-  if (isLoading) {
-    return <main className="p-6">영화 목록을 불러오는 중이에요.</main>;
-  }
-
-  if (errorMessage) {
-    return <main className="p-6">{errorMessage}</main>;
-  }
-
-  if (movies.length === 0) {
-    return <main className="p-6">조건에 맞는 영화가 없어요.</main>;
-  }
+  const handlePageChange = (nextPage: number) => {
+    setPage(nextPage);
+  };
 
   return (
     <main className="mx-auto w-full max-w-[1440px] flex-1 px-6 pb-[52px] pt-6 lg:px-20">
       <h1 className="mb-5 text-[36px] font-extrabold leading-tight tracking-tight">
         영화 목록
       </h1>
-      <MovieGrid
-        movies={movies.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE)}
-      />
-      <Pagination
-        page={page}
-        totalPages={Math.max(1, Math.ceil(movies.length / PAGE_SIZE))}
-        onChange={setPage}
-      />
+
+      {moviesQuery.isPending ? (
+        <p>영화를 불러오는 중이에요.</p>
+      ) : moviesQuery.isError ? (
+        <p>{moviesQuery.error.message}</p>
+      ) : movies.length === 0 ? (
+        <p>표시할 영화가 없어요.</p>
+      ) : (
+        <>
+          <MovieGrid movies={movies} />
+          <Pagination
+            page={page}
+            totalPages={totalPages}
+            onChange={handlePageChange}
+          />
+        </>
+      )}
     </main>
   );
 }
