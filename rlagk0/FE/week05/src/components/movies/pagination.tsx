@@ -1,6 +1,6 @@
 import { cn } from "../../utils/cn";
 
-const MAX_PAGE = 500;
+export const MAX_PAGE = 500;
 
 interface PaginationProps {
     currentPage: number;

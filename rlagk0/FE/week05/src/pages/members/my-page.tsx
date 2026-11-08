@@ -6,6 +6,7 @@ import {
     getMemberRatings,
     type MemberRating,
 } from "../../api/members/get-member-ratings";
+import { cn } from "../../utils/cn";
 
 const inputClassName =
     "h-11 min-w-0 flex-1 rounded-lg border border-[#dfe3e9] bg-white px-4 text-sm outline-none focus:border-[#536ce6]";
@@ -80,13 +81,12 @@ function AvailabilityCheck({
 
             {message && (
                 <p
-                    className={
-                        isAvailable === null
-                            ? "mt-3 text-sm text-[#d14343]"
-                            : isAvailable
-                              ? "mt-3 text-sm font-semibold text-[#2f9e6b]"
-                              : "mt-3 text-sm font-semibold text-[#d14343]"
-                    }
+                    className={cn(
+                        "mt-3 text-sm",
+                        isAvailable === null && "text-[#d14343]",
+                        isAvailable === true && "font-semibold text-[#2f9e6b]",
+                        isAvailable === false && "font-semibold text-[#d14343]",
+                    )}
                 >
                     {message}
                 </p>

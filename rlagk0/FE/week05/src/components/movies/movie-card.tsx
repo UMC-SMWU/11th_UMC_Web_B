@@ -43,7 +43,9 @@ export default function MovieCard({ movie }: MovieCardProps) {
             </h2>
 
             <p className="m-0 text-[12px] leading-[1.4] font-normal text-[#9ca2ad]">
-                {movie.release_date.replaceAll("-", ".")}
+                {movie.release_date
+                    ? movie.release_date.replaceAll("-", ".")
+                    : "개봉일 정보 없음"}
             </p>
         </article>
     );
