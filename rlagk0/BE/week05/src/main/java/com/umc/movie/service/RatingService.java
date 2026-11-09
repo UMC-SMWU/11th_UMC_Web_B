@@ -1,4 +1,3 @@
-// src/main/java/com/umc/movie/service/RatingService.java
 package com.umc.movie.service;
 
 import com.umc.movie.dto.RatingResponse;

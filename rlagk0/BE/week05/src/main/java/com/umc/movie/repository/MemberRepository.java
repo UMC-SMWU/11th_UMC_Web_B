@@ -1,4 +1,3 @@
-// src/main/java/com/umc/movie/repository/MemberRepository.java
 package com.umc.movie.repository;
 
 import com.umc.movie.entity.Member;

@@ -1,4 +1,3 @@
-// src/main/java/com/umc/movie/entity/BaseTimeEntity.java
 package com.umc.movie.entity;
 
 import jakarta.persistence.Column;

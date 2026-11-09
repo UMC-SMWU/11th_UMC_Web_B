@@ -1,4 +1,3 @@
-// src/main/java/com/umc/movie/entity/Rating.java
 package com.umc.movie.entity;
 
 import jakarta.persistence.*;

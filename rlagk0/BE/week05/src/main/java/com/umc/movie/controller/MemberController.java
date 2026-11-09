@@ -1,4 +1,3 @@
-// src/main/java/com/umc/movie/controller/MemberController.java
 package com.umc.movie.controller;
 
 import com.umc.movie.dto.EmailCheckResponse;
@@ -15,12 +14,12 @@ public class MemberController {
     private final MemberService memberService;
 
     @GetMapping("/nickname/{nickname}")
-    public NicknameCheckResponse checkNickname(@PathVariable String nickname) {
+    public NicknameCheckResponse checkNickname(@PathVariable("nickname") String nickname) {
         return memberService.checkNickname(nickname);
     }
 
     @GetMapping("/email/{email}")
-    public EmailCheckResponse checkEmail(@PathVariable String email) {
+    public EmailCheckResponse checkEmail(@PathVariable("email") String email) {
         return memberService.checkEmail(email);
     }
 }

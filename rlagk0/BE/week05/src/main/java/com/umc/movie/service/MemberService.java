@@ -1,4 +1,3 @@
-// src/main/java/com/umc/movie/service/MemberService.java
 package com.umc.movie.service;
 
 import com.umc.movie.dto.EmailCheckResponse;

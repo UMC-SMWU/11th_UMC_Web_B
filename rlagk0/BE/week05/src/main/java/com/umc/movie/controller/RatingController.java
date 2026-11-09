@@ -1,4 +1,3 @@
-// src/main/java/com/umc/movie/controller/RatingController.java
 package com.umc.movie.controller;
 
 import com.umc.movie.dto.RatingResponse;
@@ -19,7 +18,7 @@ public class RatingController {
     private final RatingService ratingService;
 
     @GetMapping("/{memberId}/ratings")
-    public List<RatingResponse> getMemberRatings(@PathVariable Long memberId) {
+    public List<RatingResponse> getMemberRatings(@PathVariable("memberId") Long memberId) {
         return ratingService.getRatingsByMember(memberId);
     }
 }
