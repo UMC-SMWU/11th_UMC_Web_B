@@ -1,6 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
 import { Link, useParams } from "@tanstack/react-router";
-import { isHTTPError } from "ky";
 import { Fragment, useState } from "react";
 import { getMovieDetail } from "../../api/movies/get-movie-detail";
 import { BookmarkButton } from "../../components/movies/bookmark-button";
@@ -24,12 +23,8 @@ export function MovieDetailPage() {
 
     const movieDetailQuery = useQuery({
         queryKey: ["movies", "detail", movieId],
-        queryFn: () => getMovieDetail(movieId),
+        queryFn: ({ signal }) => getMovieDetail(movieId, signal),
         enabled: isValidMovieId,
-        staleTime: 30 * 1000,
-        retry: (failureCount, error) =>
-            !(isHTTPError(error) && error.response.status === 404) &&
-            failureCount < 3,
     });
 
     if (!isValidMovieId) {
@@ -105,7 +100,7 @@ export function MovieDetailPage() {
 
                         <p className="mt-2 flex flex-wrap gap-2 text-sm font-semibold">
                             {metaItems.map((item, index) => (
-                                <Fragment key={item}>
+                                <Fragment key={`${index}-${item}`}>
                                     {index > 0 && <span>·</span>}
                                     <span>{item}</span>
                                 </Fragment>
@@ -218,4 +213,4 @@ function RatingForm() {
             </button>
         </aside>
     );
-}
+}

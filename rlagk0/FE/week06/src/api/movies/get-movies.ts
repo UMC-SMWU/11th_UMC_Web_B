@@ -7,10 +7,14 @@ interface GetMoviesRequest {
 
 type GetMoviesResponse = TmdbMovieListResponse;
 
-function getMovies({ page = 1 }: GetMoviesRequest = {}) {
+function getMovies(
+  { page = 1 }: GetMoviesRequest = {},
+  signal?: AbortSignal,
+) {
   return tmdbClient
     .get("movie/popular", {
       searchParams: { language: "ko-KR", page },
+      signal,
     })
     .json<GetMoviesResponse>();
 }

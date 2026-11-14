@@ -6,7 +6,6 @@ import { searchMovies } from "../../api/movies/search-movies";
 import { BookmarkButton } from "../../components/movies/bookmark-button";
 import { getTmdbPosterUrl } from "../../utils/movies/tmdb-image";
 
-
 export function SearchPage() {
     const { query = "" } = useSearch({ from: "/search" });
     const navigate = useNavigate({ from: "/search" });
@@ -16,7 +15,8 @@ export function SearchPage() {
     // 훅은 early return보다 위에 있어야 해요. 대신 enabled로 검색어가 있을 때만 요청해요.
     const searchQuery = useQuery({
         queryKey: ["movies", "search", { query: normalizedQuery }],
-        queryFn: () => searchMovies({ query: normalizedQuery }),
+        queryFn: ({ signal }) =>
+            searchMovies({ query: normalizedQuery }, signal),
         enabled: normalizedQuery.length > 0,
     });
 

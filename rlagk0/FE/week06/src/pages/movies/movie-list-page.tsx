@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { useNavigate, useSearch } from "@tanstack/react-router";
 
 import { getMovies } from "../../api/movies/get-movies";
@@ -11,7 +11,9 @@ export function MovieListPage() {
 
     const moviesQuery = useQuery({
         queryKey: ["movies", "list", { page }],
-        queryFn: () => getMovies({ page }),
+        queryFn: ({ signal }) => getMovies({ page }, signal),
+        // 다음 페이지를 불러오는 동안 이전 페이지를 계속 보여줘서 깜빡임을 막음
+        placeholderData: keepPreviousData,
     });
 
     const movies = moviesQuery.data?.results ?? [];
@@ -24,12 +26,11 @@ export function MovieListPage() {
 
     return (
         <main className="mx-auto w-[calc(100%-48px)] max-w-[1420px] flex-1 py-[31px] pb-[110px]">
-            {/* 기존 화면의 다른 UI는 그대로 유지*/}
             <h1 className="mb-7 text-[38px] leading-[1.2] font-extrabold tracking-[-1.8px] text-[#17191f]">
                 영화 목록
             </h1>
 
-            {/* 데이터를 가져오는 중인지, 오류가 발생했는지 순서대로 확인*/}
+            {/* 데이터를 가져오는 중인지, 오류가 발생했는지 순서대로 확인 */}
             {moviesQuery.isPending ? (
                 <p className="py-20 text-center text-[#727887]">
                     영화 목록을 불러오는 중이에요.
@@ -55,4 +56,4 @@ export function MovieListPage() {
             )}
         </main>
     );
-}
+}

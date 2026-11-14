@@ -8,7 +8,10 @@ interface SearchMoviesRequest {
 
 type SearchMoviesResponse = TmdbMovieListResponse;
 
-function searchMovies({ query, page = 1 }: SearchMoviesRequest) {
+function searchMovies(
+  { query, page = 1 }: SearchMoviesRequest,
+  signal?: AbortSignal,
+) {
   return tmdbClient
     .get("search/movie", {
       searchParams: {
@@ -17,6 +20,7 @@ function searchMovies({ query, page = 1 }: SearchMoviesRequest) {
         include_adult: false,
         page,
       },
+      signal,
     })
     .json<SearchMoviesResponse>();
 }
