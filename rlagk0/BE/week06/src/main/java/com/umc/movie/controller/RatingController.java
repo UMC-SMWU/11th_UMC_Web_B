@@ -7,6 +7,7 @@ import com.umc.movie.dto.UpdateRatingRequest;
 import com.umc.movie.service.RatingService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,7 +38,7 @@ public class RatingController {
             @Valid @RequestBody CreateRatingRequest request
     ) {
         Long ratingId = ratingService.create(memberId, request);
-        return ResponseEntity.status(201)
+        return ResponseEntity.status(HttpStatus.CREATED)
                 .body(ApiResponse.created("평점 등록에 성공했습니다.", ratingId));
     }
 
