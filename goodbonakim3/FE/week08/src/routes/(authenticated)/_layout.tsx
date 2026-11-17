@@ -1,0 +1,14 @@
+import { Navigate, Outlet, createFileRoute, redirect } from "@tanstack/react-router";
+import { useAuthStore } from "../../stores/auth-store";
+
+export const Route = createFileRoute("/(authenticated)/_layout")({
+  beforeLoad: () => {
+    if (!useAuthStore.getState().accessToken) {
+      throw redirect({ to: "/login", replace: true });
+    }
+  },
+  component: function AuthenticatedLayout() {
+    const accessToken = useAuthStore((state) => state.accessToken);
+    return accessToken ? <Outlet /> : <Navigate to="/login" replace />;
+  },
+});
