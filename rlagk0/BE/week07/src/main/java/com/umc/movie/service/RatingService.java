@@ -60,7 +60,7 @@ public class RatingService {
     public RatingResponse update(Long memberId, Long ratingId, UpdateRatingRequest request) {
         Rating rating = findOwnedRating(memberId, ratingId);
         rating.update(request.score(), request.comment());
-        ratingRepository.save(rating);
+        ratingRepository.flush();
         return RatingResponse.from(rating);
     }
 

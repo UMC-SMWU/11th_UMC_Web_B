@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -19,6 +20,7 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder; // 6주차 회원가입에서 등록해둔 Bean입니다
     private final JwtUtil jwtUtil;
 
+    @Transactional(readOnly = true)
     public LoginResponse login(LoginRequest request) {
         // 1. 이메일로 회원을 찾습니다.
         //    없어도 "가입되지 않은 이메일"이라고 알려주지 않고 아래와 같은 예외를 던집니다.
@@ -34,7 +36,7 @@ public class AuthService {
         }
 
         // 3. 검증을 통과했으니 토큰을 발급합니다.
-        String accessToken = jwtUtil.createAccessToken(member.getMemberId(), member.getEmail());
+        String accessToken = jwtUtil.createAccessToken(member.getMemberId());
         return new LoginResponse(member.getNickname(), accessToken);
     }
 }

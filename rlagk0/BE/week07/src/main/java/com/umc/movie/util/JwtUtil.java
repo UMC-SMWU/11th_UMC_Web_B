@@ -5,6 +5,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,6 +23,7 @@ public class JwtUtil {
 
     private final SecretKey secretKey;
     private final Duration accessExpiration;
+    private final JwtParser parser;
 
     public JwtUtil(
             @Value("${jwt.secret}") String secret,
@@ -29,13 +31,15 @@ public class JwtUtil {
     ) {
         this.secretKey = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
         this.accessExpiration = Duration.ofSeconds(accessExpiration);
+        this.parser = Jwts.parser()
+                .verifyWith(secretKey)
+                .build();
     }
 
-    public String createAccessToken(Long memberId, String email) {
+    public String createAccessToken(Long memberId) {
         Instant now = Instant.now();
         return Jwts.builder()
                 .subject(String.valueOf(memberId))
-                .claim("email", email)
                 .issuedAt(Date.from(now))
                 .expiration(Date.from(now.plus(accessExpiration)))
                 .signWith(secretKey)
@@ -55,10 +59,6 @@ public class JwtUtil {
     }
 
     private Jws<Claims> getClaims(String token) {
-        return Jwts.parser()
-                .verifyWith(secretKey)
-                .clockSkewSeconds(60)
-                .build()
-                .parseSignedClaims(token);
+        return parser.parseSignedClaims(token);
     }
 }
